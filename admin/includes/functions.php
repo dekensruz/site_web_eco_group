@@ -191,6 +191,50 @@ function generateSlug($text) {
     return empty($text) ? 'n-a' : $text;
 }
 
+function updateUser($user_id, $email, $full_name) {
+    global $conn;
+    try {
+        $stmt = $conn->prepare("UPDATE users SET email = ?, full_name = ? WHERE id = ?");
+        $stmt->bind_param("ssi", $email, $full_name, $user_id);
+        return $stmt->execute();
+    } catch (Exception $e) {
+        error_log("Exception lors de la mise à jour de l'utilisateur: " . $e->getMessage());
+        return false;
+    }
+}
+
+function updateUserPassword($user_id, $new_password) {
+    global $conn;
+    try {
+        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+        if ($hashed_password === false) {
+            error_log("Erreur lors du hashage du mot de passe pour l'utilisateur ID: " . $user_id);
+            return false;
+        }
+        
+        $stmt = $conn->prepare("UPDATE users SET password = ? WHERE id = ?");
+        $stmt->bind_param("si", $hashed_password, $user_id);
+        return $stmt->execute();
+    } catch (Exception $e) {
+        error_log("Exception lors de la mise à jour du mot de passe: " . $e->getMessage());
+        return false;
+    }
+}
+
+function getCategoryById($id) {
+    global $conn;
+    try {
+        $stmt = $conn->prepare("SELECT id, name, slug, description, created_at FROM categories WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    } catch (Exception $e) {
+        error_log("Exception lors de la récupération de la catégorie: " . $e->getMessage());
+        return false;
+    }
+}
+
 function getAllCategories() {
     global $conn;
     try {
@@ -246,16 +290,21 @@ function updateArticle($id, $title, $content, $category_id, $featured_image = nu
             return false;
         }
         
-        // Conserver le statut actuel si aucun nouveau statut n'est fourni
-        if ($status === null) {
+        // Mise à jour du statut
+        if ($status !== null && $status !== '') {
+            error_log("Nouveau statut fourni pour l'article ID: " . $id . " - Statut: " . $status);
+        } else {
             $status = $current_article['status'];
+            error_log("Conservation du statut actuel pour l'article ID: " . $id . " - Statut: " . $status);
         }
         
-        // S'assurer que le statut est valide
+        // S'assurer que le statut est valide et correctement appliqué
         $valid_statuses = ['draft', 'published'];
         if (!in_array($status, $valid_statuses)) {
             error_log("Statut invalide fourni pour l'article. ID: " . $id . ", Status: " . $status);
             $status = $current_article['status']; // Conserver l'ancien statut en cas d'erreur
+        } else {
+            error_log("Application du nouveau statut valide pour l'article ID: " . $id . " - Ancien statut: " . $current_article['status'] . " - Nouveau statut: " . $status);
         }
 
         // Générer le slug
@@ -346,5 +395,71 @@ function getAllArticles($limit = null, $offset = 0, $where = '') {
     } catch (Exception $e) {
         error_log("Error in getAllArticles: " . $e->getMessage());
         return [];
+    }
+}
+
+function createCategory($name, $description = '') {
+    global $conn;
+    try {
+        // Générer le slug
+        $slug = generateSlug($name);
+        $base_slug = $slug;
+        $counter = 1;
+        
+        // Vérifier si le slug existe déjà
+        while (true) {
+            $check = $conn->prepare("SELECT id FROM categories WHERE slug = ?");
+            $check->bind_param("s", $slug);
+            $check->execute();
+            if ($check->get_result()->num_rows === 0) break;
+            $slug = $base_slug . '-' . $counter++;
+        }
+        
+        // Insérer la nouvelle catégorie
+        $stmt = $conn->prepare("INSERT INTO categories (name, slug, description) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $name, $slug, $description);
+        
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            error_log("Erreur lors de la création de la catégorie: " . $stmt->error);
+            return false;
+        }
+    } catch (Exception $e) {
+        error_log("Exception lors de la création de la catégorie: " . $e->getMessage());
+        return false;
+    }
+}
+
+function updateCategory($id, $name, $description = '') {
+    global $conn;
+    try {
+        // Générer le slug
+        $slug = generateSlug($name);
+        $base_slug = $slug;
+        $counter = 1;
+        
+        // Vérifier si le slug existe déjà (en excluant la catégorie actuelle)
+        while (true) {
+            $check = $conn->prepare("SELECT id FROM categories WHERE slug = ? AND id != ?");
+            $check->bind_param("si", $slug, $id);
+            $check->execute();
+            if ($check->get_result()->num_rows === 0) break;
+            $slug = $base_slug . '-' . $counter++;
+        }
+        
+        // Mettre à jour la catégorie
+        $stmt = $conn->prepare("UPDATE categories SET name = ?, slug = ?, description = ? WHERE id = ?");
+        $stmt->bind_param("sssi", $name, $slug, $description, $id);
+        
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            error_log("Erreur lors de la mise à jour de la catégorie: " . $stmt->error);
+            return false;
+        }
+    } catch (Exception $e) {
+        error_log("Exception lors de la mise à jour de la catégorie: " . $e->getMessage());
+        return false;
     }
 }

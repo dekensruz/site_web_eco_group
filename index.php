@@ -348,7 +348,7 @@
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; <?php echo date('Y'); ?> Impact Eco Group. Tous droits réservés.</p>
+                <p>&copy; <?php echo date('Y'); ?> Impact Eco Group. Tous droits réservés. Conçu par Dekens Ruzuba</p>
             </div>
         </div>
     </footer>

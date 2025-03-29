@@ -23,55 +23,13 @@ $total_categories = count(getAllCategories());
     <title>Tableau de bord - Administration Eco Group</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/admin/css/admin.css">
-    <style>
-        .sidebar {
-            min-height: 100vh;
-            background-color: #343a40;
-            padding-top: 1rem;
-        }
-        .sidebar .nav-link {
-            color: #fff;
-            padding: 0.5rem 1rem;
-            margin: 0.2rem 0;
-        }
-        .sidebar .nav-link:hover {
-            background-color: rgba(255,255,255,0.1);
-        }
-        .sidebar .nav-link.active {
-            background-color: #28a745;
-        }
-        .sidebar .nav-link i {
-            margin-right: 0.5rem;
-        }
-        .main-content {
-            padding: 2rem;
-        }
-        .stats-card {
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-        }
-        .stats-card i {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-        .stats-card .number {
-            font-size: 2rem;
-            font-weight: bold;
-        }
-        .stats-card .label {
-            color: #6c757d;
-            font-size: 0.9rem;
-        }
-        .welcome-message {
-            margin-bottom: 2rem;
-        }
-    </style>
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/admin/css/admin1.css">
+
 </head>
 <body>
+    <button class="toggle-sidebar-btn d-md-none">
+        <i class="fas fa-bars"></i>
+    </button>
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
@@ -182,5 +140,19 @@ $total_categories = count(getAllCategories());
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.toggle-sidebar-btn').on('click', function() {
+                $('.sidebar').toggleClass('show');
+            });
+
+            // Fermer la barre latérale lors du clic sur un lien en mode mobile
+            $('.sidebar .nav-link').on('click', function() {
+                if ($(window).width() <= 768) {
+                    $('.sidebar').removeClass('show');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

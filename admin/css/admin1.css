@@ -4,21 +4,74 @@
     padding-top: 1rem;
     transition: all 0.3s ease;
     width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 992px) {
+    .sidebar {
+        width: 70px;
+    }
+
+    .sidebar .nav-link span {
+        display: none;
+    }
+
+    .sidebar .nav-link i {
+        margin-right: 0;
+        font-size: 1.4rem;
+    }
+
+    .main-content {
+        margin-left: 70px;
+    }
+
+    .sidebar .text-center.mb-4 img {
+        max-width: 50px;
+    }
 }
 
 @media (max-width: 768px) {
     .sidebar {
-        position: fixed;
+        left: -100%;
         top: 0;
-        left: -200px;
-        width: 200px;
+        padding-top: 3.5rem;
+        width: 250px;
+        height: 100vh;
+        transition: left 0.3s ease, box-shadow 0.3s ease;
+        background-color: #343a40;
         z-index: 1000;
-        transform: translateX(0);
-        padding-top: 0.5rem;
     }
 
     .sidebar.show {
-        transform: translateX(200px);
+        left: 0;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+    }
+
+    .toggle-sidebar-btn {
+        position: absolute;
+        top: 10px;
+        right : 10px;
+        z-index: 1100;
+        background: #343a40;
+        border: none;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .toggle-sidebar-btn:hover {
+        background: #23272b;
     }
 
     .main-content {
@@ -42,10 +95,29 @@
 
     .table-responsive {
         overflow-x: auto;
+        margin: 0 -0.5rem;
+        padding: 0 0.5rem;
+    }
+
+    .table {
+        font-size: 0.9rem;
+    }
+
+    .table td, .table th {
+        padding: 0.5rem;
     }
 
     .stats-card {
         margin-bottom: 1rem;
+        padding: 1rem;
+    }
+
+    .stats-card .number {
+        font-size: 1.5rem;
+    }
+
+    .stats-card i {
+        font-size: 1.5rem;
     }
 
     .welcome-message h1 {
@@ -59,6 +131,30 @@
 
     .form-control {
         margin-bottom: 1rem;
+        font-size: 0.95rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.2rem;
+    }
+
+    .form-label {
+        font-size: 0.95rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.95rem;
+    }
+
+    .custom-file-label {
+        font-size: 0.95rem;
+        padding: 0.4rem 0.75rem;
+    }
+
+    .ck-editor__editable {
+        min-height: 200px;
     }
 }
 
@@ -88,6 +184,15 @@
 .main-content {
     padding: 2rem;
     background-color: #f8f9fa;
+    margin-left: 250px;
+    transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
+    }
 }
 
 .card {

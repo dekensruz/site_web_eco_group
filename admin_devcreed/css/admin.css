@@ -364,7 +364,7 @@ body {
 /* Responsive */
 @media (max-width: 992px) {
     .admin-sidebar {
-        width: 70px;
+        width: 60px;
         overflow: hidden;
     }
     
@@ -386,6 +386,8 @@ body {
 @media (max-width: 768px) {
     .admin-sidebar {
         width: 0;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease, width 0.3s ease;
     }
     
     .admin-content {
@@ -393,7 +395,8 @@ body {
     }
     
     .admin-sidebar.show {
-        width: 250px;
+        width: 200px;
+        transform: translateX(0);
     }
     
     .admin-sidebar.show .navbar-brand span,
