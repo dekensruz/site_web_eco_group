@@ -398,6 +398,76 @@ function getAllArticles($limit = null, $offset = 0, $where = '') {
     }
 }
 
+function createUser($username, $password, $email, $full_name, $role = 'visitor') {
+    global $conn;
+    try {
+        // Vérifier si l'utilisateur existe déjà
+        $stmt = $conn->prepare("SELECT id FROM users WHERE username = ? OR email = ?");
+        $stmt->bind_param("ss", $username, $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            error_log("Tentative de création d'un utilisateur avec un nom ou email déjà existant: " . $username);
+            return false;
+        }
+        
+        // Hasher le mot de passe
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        if ($hashed_password === false) {
+            error_log("Erreur lors du hashage du mot de passe pour l'utilisateur: " . $username);
+            return false;
+        }
+        
+        // Insérer l'utilisateur
+        $stmt = $conn->prepare("INSERT INTO users (username, password, email, full_name, role) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssss", $username, $hashed_password, $email, $full_name, $role);
+        
+        if ($stmt->execute()) {
+            error_log("Nouvel utilisateur créé avec succès: " . $username);
+            return true;
+        }
+        
+        error_log("Échec de la création de l'utilisateur. Erreur: " . $stmt->error);
+        return false;
+    } catch (Exception $e) {
+        error_log("Exception lors de la création de l'utilisateur: " . $e->getMessage());
+        return false;
+    }
+}
+
+function deleteCategory($id) {
+    global $conn;
+    try {
+        // Vérifier si la catégorie est utilisée par des articles
+        $stmt = $conn->prepare("SELECT COUNT(*) as count FROM articles WHERE category_id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        
+        if ($row['count'] > 0) {
+            error_log("Impossible de supprimer la catégorie ID: " . $id . " - Des articles y sont associés");
+            return false;
+        }
+        
+        // Supprimer la catégorie
+        $stmt = $conn->prepare("DELETE FROM categories WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        
+        if ($stmt->execute()) {
+            error_log("Catégorie supprimée avec succès - ID: " . $id);
+            return true;
+        }
+        
+        error_log("Erreur lors de la suppression de la catégorie: " . $stmt->error);
+        return false;
+    } catch (Exception $e) {
+        error_log("Exception lors de la suppression de la catégorie: " . $e->getMessage());
+        return false;
+    }
+}
+
 function createCategory($name, $description = '') {
     global $conn;
     try {

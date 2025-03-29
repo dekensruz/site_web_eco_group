@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agriculture Durable - Impact Eco Group</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style1.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
@@ -234,9 +234,17 @@
                     <h3>Nos Activités</h3>
                     <ul>
                         <li><a href="agriculture.php">Agriculture Durable</a></li>
-                        <li><a href="#">Énergie Renouvelable</a></li>
-                        <li><a href="#">Éducation et Formation</a></li>
+                        <li><a href="energie_renouvelable.php">Énergie Renouvelable</a></li>
+                        <li><a href="education_formation.php">Éducation et Formation</a></li>
                         <li><a href="finance.php">Finance Durable</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Nos Partenaires</h3>
+                    <ul class="partners-list">
+                        <li><a href="#">ISIG-Goma</a></li>
+                        <li><a href="#">Couleurs Afrique</a></li>
+                        <li><a href="#">CFPI</a></li>
                     </ul>
                 </div>
             </div>

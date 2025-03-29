@@ -167,7 +167,7 @@ footer {
         margin-top: 2rem;
         padding-top: 1.5rem;
     }
-}
+}}
 </style>
     <!-- Footer -->
     <footer>
@@ -194,6 +194,14 @@ footer {
                         <li><a href="energie_renouvelable.php">Énergie Renouvelable</a></li>
                         <li><a href="education_formation.php">Éducation et Formation</a></li>
                         <li><a href="finance.php">Finance Durable</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Nos Partenaires</h3>
+                    <ul class="partners-list">
+                        <li><a href="#">ISIG-Goma</a></li>
+                        <li><a href="#">Couleurs Afrique</a></li>
+                        <li><a href="#">CFPI</a></li>
                     </ul>
                 </div>
             </div>

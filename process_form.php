@@ -1,6 +1,7 @@
 <?php
-// Inclure le fichier de configuration de la base de données
+// Inclure les fichiers de configuration
 require_once 'db/config.php';
+require_once 'smtp_config.php';
 
 // Initialisation des variables d'erreur
 $nameErr = $emailErr = $phoneErr = $subjectErr = $messageErr = "";
@@ -77,8 +78,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         try {
             // Enregistrer le message dans la base de données
-            $stmt = $conn->prepare("INSERT INTO messages (name, email, phone, subject, message) VALUES (?, ?, ?, ?, ?)");
-            $stmt->bind_param("sssss", $name, $email, $phone, $subject, $message);
+            $stmt = $conn->prepare("INSERT INTO messages (name, email, subject, message) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("ssss", $name, $email, $subject, $message);
             
             if ($stmt->execute()) {
                 // Réinitialiser les variables

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finance Durable - Impact Eco Group</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style1.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
@@ -247,6 +247,10 @@
         <div class="container">
             <div class="footer-container">
                 <div class="footer-col">
+                    <h3>Impact Eco Group</h3>
+                    <p>Solutions durables pour un avenir meilleur en République Démocratique du Congo.</p>
+                </div>
+                <div class="footer-col">
                     <h3>Liens Rapides</h3>
                     <ul>
                         <li><a href="index.php#home">Accueil</a></li>
@@ -266,13 +270,20 @@
                         <li><a href="finance.php">Finance Durable</a></li>
                     </ul>
                 </div>
+                <div class="footer-col">
+                    <h3>Nos Partenaires</h3>
+                    <ul class="partners-list">
+                        <li><a href="#">ISIG-Goma</a></li>
+                        <li><a href="#">Couleurs Afrique</a></li>
+                        <li><a href="#">CFPI</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="copyright">
                 <p>&copy; <?php echo date('Y'); ?> Impact Eco Group. Tous droits réservés.</p>
             </div>
         </div>
     </footer>
-
     <!-- JavaScript -->
     <script src="js/main.js"></script>
     <script src="js/form-validation.js"></script>
