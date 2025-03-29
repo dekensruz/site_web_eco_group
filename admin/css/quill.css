@@ -1,0 +1,30 @@
+/* Styles pour l'éditeur Quill */
+.ql-container {
+    height: 400px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
+.ql-toolbar {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem 0.25rem 0 0;
+}
+
+.ql-editor {
+    min-height: 300px;
+    background-color: white;
+    border: 1px solid #ced4da;
+    border-top: none;
+    border-radius: 0 0 0.25rem 0.25rem;
+}
+
+.ql-editor img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Style pour le conteneur de l'éditeur */
+.editor-wrapper {
+    margin-bottom: 1rem;
+}
